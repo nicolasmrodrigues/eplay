@@ -1,103 +1,62 @@
 import ProductsList from '../../components/ProductsList'
-import Game from '../../models/Game'
-import resident from '../../assets/images/resident.png'
-import diablo from '../../assets/images/diablo.png'
-import zelda from '../../assets/images/zelda.png'
-import starWars from '../../assets/images/star_wars.png'
 
-const promocoes: Game[] = [
-  {
-    title: 'Resident Evil 4',
-    image: resident,
-    category: 'Ação',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    id: 1
-  },
-  {
-    title: 'Resident Evil 4',
-    image: diablo,
-    category: 'PS5',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    system: 'Windows',
-    infos: ['5%', 'R$ 290,00'],
-    id: 2
-  },
-  {
-    title: 'Resident Evil 4',
-    image: zelda,
-    category: 'Ação',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    id: 3
-  },
-  {
-    title: 'Resident Evil 4',
-    image: starWars,
-    category: 'Ação',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    id: 4
-  }
-]
+import {
+  useGetActionGamesQuery,
+  useGetSportGamesQuery,
+  useGetSimulationGamesQuery,
+  useGetFightGamesQuery,
+  useGetRpgGamesQuery
+} from '../../services/api'
 
-const emBreve: Game[] = [
-  {
-    title: 'Diablo IV',
-    image: diablo,
-    category: 'RPG',
-    description:
-      'Diablo IV é um RPG de ação em desenvolvimento pela Blizzard Entertainment.',
-    system: 'Windows',
-    infos: ['17/05'],
-    id: 5
-  },
-  {
-    title: 'Zelda',
-    image: zelda,
-    category: 'RPG',
-    description:
-      'Diablo IV é um RPG de ação em desenvolvimento pela Blizzard Entertainment.',
-    system: 'Nintendo Switch',
-    infos: ['17/05'],
-    id: 6
-  },
-  {
-    title: 'Star Wars',
-    image: starWars,
-    category: 'RPG',
-    description:
-      'Diablo IV é um RPG de ação em desenvolvimento pela Blizzard Entertainment.',
-    system: 'PC',
-    infos: ['17/05'],
-    id: 7
-  },
-  {
-    title: 'Resident Evil 4',
-    image: resident,
-    category: 'RPG',
-    description:
-      'Diablo IV é um RPG de ação em desenvolvimento pela Blizzard Entertainment.',
-    system: 'Windows',
-    infos: ['17/05'],
-    id: 8
-  }
-]
+const Categories = () => {
+  const { data: actionGames, isLoading: isLoadingAction } =
+    useGetActionGamesQuery()
+  const { data: sportGames, isLoading: isLoadingSport } =
+    useGetSportGamesQuery()
+  const { data: simulationGames, isLoading: isLoadingSimulation } =
+    useGetSimulationGamesQuery()
+  const { data: fightGames, isLoading: isLoadingFight } =
+    useGetFightGamesQuery()
+  const { data: rpgGames, isLoading: isLoadingRpg } = useGetRpgGamesQuery()
 
-const Categories = () => (
-  <>
-    <ProductsList title="RPG" background="gray" games={promocoes} />
-    <ProductsList title="Ação" background="black" games={emBreve} />
-    <ProductsList title="Aventura" background="gray" games={promocoes} />
-    <ProductsList title="FPS" background="black" games={emBreve} />
-  </>
-)
-
+  return (
+    <>
+      <ProductsList
+        id="action"
+        title="Ação"
+        background="black"
+        games={actionGames}
+        isLoading={isLoadingAction}
+      />
+      <ProductsList
+        id="sports"
+        title="Esportes"
+        background="gray"
+        games={sportGames}
+        isLoading={isLoadingSport}
+      />
+      <ProductsList
+        id="fight"
+        title="Luta"
+        background="black"
+        games={fightGames}
+        isLoading={isLoadingFight}
+      />
+      <ProductsList
+        id="rpg"
+        title="RPG"
+        background="gray"
+        games={rpgGames}
+        isLoading={isLoadingRpg}
+      />
+      <ProductsList
+        id="simulation"
+        title="Simulação"
+        background="black"
+        games={simulationGames}
+        isLoading={isLoadingSimulation}
+      />
+    </>
+  )
+}
 export default Categories
